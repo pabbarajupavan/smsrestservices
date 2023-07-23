@@ -42,6 +42,7 @@ public class StudentMasterRequest {
 	
 	private String joiningOfClass ;
 	
+	private String admissionNumber ;
 	
 	private String previousSchool;
 	
