@@ -2,8 +2,9 @@ package com.sms.beans;
 
 import java.sql.Timestamp;
 
-import jakarta.persistence.Column;
+import lombok.Data;
 
+@Data
 public class StudentMasterRequest {
 	
 	private RequestHeader reqHdr ;
