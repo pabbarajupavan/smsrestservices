@@ -52,6 +52,9 @@ public class StudentMaster {
 	@Column(name = "joc")
 	private String joiningOfClass ;
 	
+	@Column(name = "admission_no")
+	private String admissionNumber ;
+	
 	@Column(name = "previous_school")
 	private String previousSchool;
 	
