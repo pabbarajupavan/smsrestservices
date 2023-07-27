@@ -46,6 +46,7 @@ public class StudentMasterRequest {
 	
 	private String previousSchool;
 	
+	private String syllabus ;
 	
 	private int tcNumber ;
 	
