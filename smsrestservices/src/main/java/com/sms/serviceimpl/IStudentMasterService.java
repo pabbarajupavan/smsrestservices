@@ -38,6 +38,7 @@ public class IStudentMasterService implements StudentMasterService {
 			master.setJoiningOfClass(request.getJoiningOfClass());
 			master.setAdmissionNumber(request.getAdmissionNumber());
 			master.setPreviousSchool(request.getPreviousSchool());
+			master.setSyllabus(request.getSyllabus());
 			master.setTcNumber(request.getTcNumber());
 			master.setTcCheck('Y');
 			master.setFeeCheck('Y');
