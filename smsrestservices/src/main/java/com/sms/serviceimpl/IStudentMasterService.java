@@ -2,6 +2,8 @@ package com.sms.serviceimpl;
 
 import java.sql.Timestamp;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import com.sms.service.StudentMasterService;
 
 @Service("studentMasterService")
 public class IStudentMasterService implements StudentMasterService {
+	
+	public static final Logger logger = LoggerFactory.getLogger(IStudentMasterService.class);
 
 	@Autowired
 	private StudentMasterRepository studentMasterRepo ;
@@ -19,13 +23,15 @@ public class IStudentMasterService implements StudentMasterService {
 	@Override
 	public String enrollStudent(StudentMasterRequest request) {
 		// TODO Auto-generated method stub
+		long startTime = System.currentTimeMillis() ;
+		logger.info("saving students to db starts at" +startTime);
 		String response = null;
 		try {
 			long creationTime = System.currentTimeMillis() ;
 			Timestamp creationTimeStamp = new Timestamp(creationTime) ;
 			String userName = request.getReqHdr().getUserName() ;
 			StudentMaster master = new StudentMaster() ;
-			master.setFisrtName(request.getFisrtName());
+			master.setFirstName(request.getFirstName());
 			master.setLastName(request.getLastName());
 			master.setFatherName(request.getFatherName());
 			master.setMotherName(request.getMotherName());
@@ -40,8 +46,10 @@ public class IStudentMasterService implements StudentMasterService {
 			master.setPreviousSchool(request.getPreviousSchool());
 			master.setSyllabus(request.getSyllabus());
 			master.setTcNumber(request.getTcNumber());
-			master.setTcCheck('Y');
-			master.setFeeCheck('Y');
+			master.setDayScholor(request.getDayScholor());
+			master.setTcCheck("Y");
+			master.setFeeCheck("Y");
+			master.setCreationTime(creationTimeStamp);
 			master.setCreatedBy(userName);
 			master.setUpdatedBy(userName);
 			master.setLastUpdatedTime(creationTimeStamp);
@@ -50,6 +58,8 @@ public class IStudentMasterService implements StudentMasterService {
 				response = "Student successfully Enrolled";
 				
 			}
+			long endTime = System.currentTimeMillis() ;
+			logger.info("Student record inserted at" + endTime);
 			return response ;
 		} catch (Exception e) {
 			// TODO: handle exception
