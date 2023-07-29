@@ -12,39 +12,42 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "cms_fee_master")
+@Table(name = "sms_fee_master")
 public class FeeMaster {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int fee_master_id ;
+	private Long fee_master_id ;
 	
 	@Column(name = "syl_type")
 	private String syllabusType ;
 	
-	@Column(name = "class")
-	private String sClass ;
+	@Column(name = "class_section")
+	private String group ;
 	
 	@Column(name = "tution_fee")
-	private int tutionFee ;
+	private double tutionFee ;
 	
 	@Column(name = "transport_fee")
-	private int transportFee ;
+	private double transportFee ;
 	
 	@Column(name = "accessory_fee")
-	private int accessoryFee ;
+	private double accessoryFee ;
 	
 	@Column(name = "lib_fee")
-	private int libraryFee ;
+	private double libraryFee ;
 	
 	@Column(name = "exam_fee")
-	private int examFee ;
+	private double examFee ;
+	
+	@Column(name = "hostel_fee")
+	private double hostelFee ;
 	
 	@Column(name = "annual_fee")
-	private int annualFee ;
+	private double annualFee ;
 	
 	@Column(name = "discount")
-	private int discount ;
+	private double discount ;
 	
 	@Column(name = "updated_by")
 	private String updatedBy ;
