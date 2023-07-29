@@ -20,7 +20,7 @@ public class StudentMaster {
 	private Long student_master_id ;
 	
 	@Column(name = "first_name")
-	private String fisrtName ;
+	private String firstName ;
 	
 	@Column(name = "last_name")
 	private String lastName ;
@@ -64,11 +64,14 @@ public class StudentMaster {
 	@Column(name = "tc_num")
 	private int tcNumber ;
 	
+	@Column(name = "day_scholor")
+	private String dayScholor ;
+	
 	@Column(name = "tc_check")
-	private char tcCheck ;
+	private String tcCheck ;
 	
 	@Column(name = "fee_check")
-	private char feeCheck ;
+	private String feeCheck ;
 	
 	@Column(name = "updated_by")
 	private String updatedBy ;
