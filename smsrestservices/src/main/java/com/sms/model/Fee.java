@@ -12,12 +12,12 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sms_fee")
+@Table(name = "cms_fee")
 public class Fee {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int fee_id ;
+	private Long fee_id ;
 	
 	@Column(name = "admission_number")
 	private String admissionNumber ;
