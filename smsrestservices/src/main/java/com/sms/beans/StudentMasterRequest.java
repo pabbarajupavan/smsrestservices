@@ -10,7 +10,7 @@ public class StudentMasterRequest {
 	private RequestHeader reqHdr ;
 	
 	
-	private String fisrtName ;
+	private String firstName ;
 	
 	
 	private String lastName ;
@@ -51,10 +51,12 @@ public class StudentMasterRequest {
 	private int tcNumber ;
 	
 	
-	private char tcCheck ;
+	private String tcCheck ;
+	
+	private String dayScholor;
 	
 	
-	private char feeCheck ;
+	private String feeCheck ;
 	
 	
 	private String updatedBy ;
