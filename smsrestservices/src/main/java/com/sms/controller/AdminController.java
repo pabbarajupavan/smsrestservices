@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sms.beans.FeeMasterRequest;
+import com.sms.beans.PaymentRequest;
 import com.sms.beans.StudentMasterRequest;
+import com.sms.beans.StudentResponse;
+import com.sms.model.StudentMaster;
 import com.sms.service.FeeMasterService;
+import com.sms.service.FeeService;
 import com.sms.service.FileUploadService;
 import com.sms.service.StudentMasterService;
 
@@ -30,6 +35,9 @@ public class AdminController {
 	
 	@Autowired
 	private FeeMasterService feeMasterService ;
+	
+	@Autowired
+	private FeeService feeService ;
 	
 	@Autowired
 	private FileUploadService fileUploadService ;
@@ -111,8 +119,39 @@ public class AdminController {
 	}
 	
 	/**
+	 * Rest call to get student info
+	 * for the payment
+	 */
+	@RequestMapping(value = "/getstudentInfoForFee", method = RequestMethod.GET)
+	public StudentResponse getStudentInfoForFee(@RequestBody PaymentRequest req) {
+		StudentResponse resp = new StudentResponse() ;
+		long currentTime = System.currentTimeMillis() ;
+		logger.info("inside rest call to get the fee details of student started at" +currentTime) ;
+		
+		if (req != null && req.getReqHdr().getUserName() != null) {
+			
+			 resp = studentMasterService.fetchStudentInfoForFeePayaments(req.getStudentRequest().getAdmissionNumber()) ;
+			
+		}
+		
+		return resp;
+	}
+
+	
+	
+	
+	/**
 	 * Rest call to add fee payment of student
 	 * to the fee table
 	 * 
 	 */
+	@RequestMapping(value = "/payments", method = RequestMethod.POST)
+	private String savePayments(@RequestBody PaymentRequest request) {
+		
+		if (request != null && request.getReqHdr().getUserName() != null) {
+			response = feeService.addPaymentInfo(request);
+		} 
+		return response ;
+		
+	}
 }
