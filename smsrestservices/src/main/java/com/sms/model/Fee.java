@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "cms_fee")
+@Table(name = "sms_fee_record")
 public class Fee {
 	
 	@Id
@@ -23,25 +23,28 @@ public class Fee {
 	private String admissionNumber ;
 	
 	@Column(name ="a_fee")
-	private int aFee;
+	private double aFee;
 	
 	@Column(name ="d_fee")
-	private int dFee;
+	private double dFee;
 	
 	@Column(name ="f_fee")
-	private int fFee;
+	private double fFee;
+	
+	@Column(name ="exam_fee")
+	private double examFee;
 	
 	@Column(name ="t1")
-	private int t1;
+	private double t1;
 	
 	@Column(name ="t2")
-	private int t2;
+	private double t2;
 	
 	@Column(name ="t3")
-	private int t3;
+	private double t3;
 	
 	@Column(name ="balance")
-	private int balance;
+	private double balance;
 	
 	@Column(name = "reference")
 	private String reference ;
@@ -57,5 +60,8 @@ public class Fee {
 	
 	@Column(name = "last_updated_time")
 	private Timestamp lastUpdatedTime ;
+	
+	@Column(name = "bill_number")
+	private long billNumber ;
 	
 }
