@@ -12,7 +12,7 @@ public class FeeMasterRequest {
 	private String syllabusType ;
 	
 
-	private String sClass ;
+	private String group ;
 	
 
 	private int tutionFee ;
