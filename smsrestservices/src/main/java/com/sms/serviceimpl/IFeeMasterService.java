@@ -27,7 +27,7 @@ public class IFeeMasterService implements FeeMasterService {
 			String userName = request.getReqHdr().getUserName() ;
 			FeeMaster master = new FeeMaster() ;
 			master.setSyllabusType(request.getSyllabusType());
-			master.setGroup(request.getSClass());
+			master.setGroup(request.getGroup());
 			master.setTutionFee(request.getTutionFee());
 			master.setTransportFee(request.getTransportFee());
 			master.setAccessoryFee(request.getAccessoryFee());
