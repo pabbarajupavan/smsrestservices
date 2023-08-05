@@ -39,37 +39,43 @@ public class IFileUploadService implements FileUploadService {
         			.map(line -> line.split(","))
         			.map(columns -> {
         				StudentMaster student = new StudentMaster() ;
-        				student.setFirstName(columns[0]);
-        				student.setLastName(columns[1]);
-        				student.setFatherName(columns[2]);
-        				student.setMotherName(columns[3]);
-        				student.setParentMobileNumber(Long.parseLong(columns[4]));
-        				student.setAdharNumber(Long.parseLong(columns[5]));
-        				student.setAddress(columns[6]);
-        				String dateOfBirth = columns[7];
-        				student.setDateOfBirth(Timestamp.valueOf(dateOfBirth));
-        				student.setAdmissionNumber(columns[8]);
-        				student.setDateOfJoin(Timestamp.valueOf(columns[9]));
-        				student.setJoiningOfClass(columns[10]);
-        				student.setSyllabus(columns[11]);
-        				student.setPreviousSchool(columns[12]) ;
-        				if (columns[13].isEmpty() || columns[13].isBlank()) {
-							student.setTcNumber(0);
-						}else {
-							student.setTcNumber(Integer.parseInt(columns[13]));
+        				if (!studentMasterRepository.existsByAdmissionNumber(columns[8])) {
+        					student.setFirstName(columns[0]);
+            				student.setLastName(columns[1]);
+            				student.setFatherName(columns[2]);
+            				student.setMotherName(columns[3]);
+            				student.setParentMobileNumber(Long.parseLong(columns[4]));
+            				student.setAdharNumber(Long.parseLong(columns[5]));
+            				student.setAddress(columns[6]);
+            				String dateOfBirth = columns[7];
+            				student.setDateOfBirth(Timestamp.valueOf(dateOfBirth));
+            				student.setAdmissionNumber(columns[8]);
+            				student.setDateOfJoin(Timestamp.valueOf(columns[9]));
+            				student.setJoiningOfClass(columns[10]);
+            				student.setSyllabus(columns[11]);
+            				student.setPreviousSchool(columns[12]) ;
+            				if (columns[13].isEmpty() || columns[13].isBlank()) {
+    							student.setTcNumber(0);
+    						}else {
+    							student.setTcNumber(Integer.parseInt(columns[13]));
+    						}
+            				student.setDayScholor(columns[14]);
+            				student.setTcCheck("Y");
+            				student.setFeeCheck("Y") ;
+            				student.setCreatedBy(userName);
+                            student.setCreationTime(creTimestamp);
+                            student.setUpdatedBy(userName);
+                            student.setLastUpdatedTime(creTimestamp);
+                            
 						}
-        				student.setDayScholor(columns[14]);
-        				student.setTcCheck("Y");
-        				student.setFeeCheck("Y") ;
-        				student.setCreatedBy(userName);
-                        student.setCreationTime(creTimestamp);
-                        student.setUpdatedBy(userName);
-                        student.setLastUpdatedTime(creTimestamp);
-                        return student ;
+						return student;
+        				
         			}).collect(Collectors.toList());
         	
         	try {
-                List<StudentMaster> students = studentMasterRepository.saveAll(studentsList) ;
+        		
+              List<StudentMaster> students = studentMasterRepository.saveAll(studentsList) ;
+              logger.info(students.toString());
               if (students!= null && students.size() !=0) {
                  response = "Student list added to the database" ; 
               }

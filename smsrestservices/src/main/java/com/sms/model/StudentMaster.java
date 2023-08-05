@@ -2,11 +2,13 @@ package com.sms.model;
 
 import java.sql.Timestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -87,6 +89,9 @@ public class StudentMaster {
 	
 	@Column(name = "last_updated_time")
 	private Timestamp lastUpdatedTime ;
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "studentmaser")
+	private Fee fees ;
 	
 	
 	
