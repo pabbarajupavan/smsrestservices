@@ -27,23 +27,15 @@ public class IFeeMasterService implements FeeMasterService {
 			String userName = request.getReqHdr().getUserName() ;
 			FeeMaster master = new FeeMaster() ;
 			master.setSyllabusType(request.getSyllabusType());
-			master.setGroup(request.getGroup());
 			master.setTutionFee(request.getTutionFee());
 			master.setTransportFee(request.getTransportFee());
 			master.setAccessoryFee(request.getAccessoryFee());
 			master.setLibraryFee(request.getLibraryFee());
 			master.setExamFee(request.getExamFee());
 			master.setHostelFee(request.getHostelFee());
-			int annualFee = request.getTutionFee() + request.getTransportFee() + 
-					request.getAccessoryFee() + request.getLibraryFee() + request.getExamFee() + request.getHostelFee();
-			System.out.println(annualFee);
-			master.setDiscount(request.getDiscount());
+			
 			double discount = request.getDiscount();
 			System.out.println(discount);
-			double discountAmount = annualFee *(discount / 100);
-			double total = annualFee - discountAmount;
-			System.out.println(total);
-			master.setAnnualFee(total);
 			master.setCreationTime(creationTimeStamp);
 			master.setCreatedBy(userName);
 			master.setUpdatedBy(userName);

@@ -2,19 +2,19 @@ package com.sms.model;
 
 import java.sql.Timestamp;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sms_student_master")
+@Table(name = "sms_student_config")
 public class StudentMaster {
 	
 	@Id
@@ -33,44 +33,44 @@ public class StudentMaster {
 	@Column(name = "mother_name")
 	private String motherName ;
 	
-	@Column(name = "dob")
+	@Column(name = "date_of_birth")
 	private Timestamp dateOfBirth ;
 	
-	@Column(name = "s_mobile")
-	private Long studentMobileNumber ;
-	
-	@Column(name = "p_mobile")
+	@Column(name = "parent_mobile")
 	private Long parentMobileNumber ;
 	
-	@Column(name = "adhaar_no")
+	@Column(name = "adhar_number")
 	private Long adharNumber ;
 	
 	@Column(name = "address")
 	private String address ;
 	
-	@Column(name = "doj")
+	@Column(name = "date_of_join")
 	private Timestamp dateOfJoin ;
 	
-	@Column(name = "joc")
+	@Column(name = "joining_of_class")
 	private String joiningOfClass ;
 	
-	@Column(name = "sclass")
+	@Column(name = "present_class")
 	private String presentClass ;
 	
 	@Column(name = "syllabus")
 	private String syllabus;
 	
-	@Column(name = "admission_no")
+	@Column(name = "admission_number")
 	private String admissionNumber ;
 	
 	@Column(name = "previous_school")
 	private String previousSchool;
 	
-	@Column(name = "tc_num")
+	@Column(name = "tc_number")
 	private int tcNumber ;
 	
-	@Column(name = "day_scholor")
-	private String dayScholor ;
+	@Column(name = "day_scholor_check")
+	private String dayScholorCheck ;
+	
+	@Column(name = "transport_check")
+	private String transportCheck ;
 	
 	@Column(name = "tc_check")
 	private String tcCheck ;
@@ -89,10 +89,6 @@ public class StudentMaster {
 	
 	@Column(name = "last_updated_time")
 	private Timestamp lastUpdatedTime ;
-	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "studentmaser")
-	private Fee fees ;
-	
 	
 	
 }

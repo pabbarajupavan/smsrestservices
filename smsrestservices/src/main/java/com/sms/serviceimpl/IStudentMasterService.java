@@ -45,7 +45,6 @@ public class IStudentMasterService implements StudentMasterService {
 				master.setFatherName(request.getFatherName());
 				master.setMotherName(request.getMotherName());
 				master.setDateOfBirth(request.getDateOfBirth());
-				master.setStudentMobileNumber(request.getStudentMobileNumber());
 				master.setParentMobileNumber(request.getParentMobileNumber());
 				master.setAdharNumber(request.getAdharNumber());
 				master.setAddress(request.getAddress());
@@ -55,7 +54,8 @@ public class IStudentMasterService implements StudentMasterService {
 				master.setPreviousSchool(request.getPreviousSchool());
 				master.setSyllabus(request.getSyllabus());
 				master.setTcNumber(request.getTcNumber());
-				master.setDayScholor(request.getDayScholor());
+				master.setDayScholorCheck(request.getDayScholorCheck());
+				master.setTransportCheck(request.getTransportCheck());
 				master.setTcCheck("Y");
 				master.setFeeCheck("Y");
 				master.setCreationTime(creationTimeStamp);
@@ -100,14 +100,7 @@ public class IStudentMasterService implements StudentMasterService {
 					response.setStudentClass(studentMaster.getPresentClass());
 					
 					if (admissionNumber.equals(studentFee.getAdmissionNumber())) {
-						response.setAFee(studentFee.getAFee());
-						response.setDFee(studentFee.getDFee());
-						response.setBalance(studentFee.getBalance());
-						response.setExamFee(studentFee.getExamFee());
-						response.setFinalFee(studentFee.getFFee());
-						response.setT1(studentFee.getT1());
-						response.setT2(studentFee.getT2());
-						response.setT3(studentFee.getT3());
+						
 					}else {
 						response.setMessage("Student entry not there in fee table");
 					}

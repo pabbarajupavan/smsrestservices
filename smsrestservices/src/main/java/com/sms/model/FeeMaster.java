@@ -12,18 +12,18 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sms_fee_master")
+@Table(name = "sms_fee_config")
 public class FeeMaster {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fee_master_id ;
 	
-	@Column(name = "syl_type")
+	@Column(name = "syllabus_type")
 	private String syllabusType ;
 	
 	@Column(name = "class_section")
-	private String group ;
+	private String classSection ;
 	
 	@Column(name = "tution_fee")
 	private double tutionFee ;
@@ -34,7 +34,7 @@ public class FeeMaster {
 	@Column(name = "accessory_fee")
 	private double accessoryFee ;
 	
-	@Column(name = "lib_fee")
+	@Column(name = "library_fee")
 	private double libraryFee ;
 	
 	@Column(name = "exam_fee")
@@ -42,12 +42,6 @@ public class FeeMaster {
 	
 	@Column(name = "hostel_fee")
 	private double hostelFee ;
-	
-	@Column(name = "annual_fee")
-	private double annualFee ;
-	
-	@Column(name = "discount")
-	private double discount ;
 	
 	@Column(name = "updated_by")
 	private String updatedBy ;
@@ -58,7 +52,7 @@ public class FeeMaster {
 	@Column(name = "creation_time")
 	private Timestamp creationTime ;
 	
-	@Column(name = "last_updated_time")
+	@Column(name = "last_update_date")
 	private Timestamp lastUpdatedTime ;
 	
 }

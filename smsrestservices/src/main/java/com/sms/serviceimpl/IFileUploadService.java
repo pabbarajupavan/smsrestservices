@@ -59,7 +59,8 @@ public class IFileUploadService implements FileUploadService {
     						}else {
     							student.setTcNumber(Integer.parseInt(columns[13]));
     						}
-            				student.setDayScholor(columns[14]);
+            				student.setDayScholorCheck(columns[14]);
+            				student.setTransportCheck(columns[15]);
             				student.setTcCheck("Y");
             				student.setFeeCheck("Y") ;
             				student.setCreatedBy(userName);

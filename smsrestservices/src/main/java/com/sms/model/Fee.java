@@ -15,46 +15,37 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "sms_fee_record")
+@Table(name = "student_fee_details")
 public class Fee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fee_id ;
 	
 	@Column(name = "admission_number")
 	private String admissionNumber ;
 	
-	@Column(name ="a_fee")
-	private double aFee;
 	
-	@Column(name ="d_fee")
-	private double dFee;
-	
-	@Column(name ="f_fee")
-	private double fFee;
 	
 	@Column(name ="exam_fee")
 	private double examFee;
 	
-	@Column(name ="t1")
-	private double t1;
+	@Column(name ="tution_fee")
+	private double tutionFee;
 	
-	@Column(name ="t2")
-	private double t2;
+	@Column(name ="hostel_fee")
+	private double hostelFee;
 	
-	@Column(name ="t3")
-	private double t3;
+	@Column(name ="transport_fee")
+	private double transportFee;
 	
 	@Column(name = "amount_paid")
 	private double amountPaid ;
 	
 	@Column(name ="balance")
-	private double balance;
+	private double balance ;
 	
-	@Column(name = "reference")
-	private String reference ;
-	
+		
 	@Column(name = "updated_by")
 	private String updatedBy ;
 	
@@ -70,8 +61,6 @@ public class Fee {
 	@Column(name = "bill_number")
 	private long billNumber ;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "student")
-	private StudentMaster student;
+	
 	
 }

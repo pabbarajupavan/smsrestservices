@@ -45,17 +45,10 @@ public class IFeeService implements FeeService{
 			Fee fee = new Fee() ;
 			if (studentsMap.containsKey(student.getAdmissionNumber())) {
 				fee.setAdmissionNumber(request.getStudentRequest().getAdmissionNumber());
-				fee.setAFee(request.getAFee());
-				fee.setExamFee(request.getExamFee());
-				fee.setDFee(request.getDFee());
-				fee.setFFee(request.getFFee());
-				fee.setT1(request.getT1());
-				fee.setT1(request.getT2());
-				fee.setT3(request.getT3());
+				
 				fee.setBalance(request.getBalance());
 				fee.setCreatedBy(request.getReqHdr().getUserName());
 				fee.setUpdatedBy(request.getReqHdr().getUserName());
-				fee.setReference(request.getReference());
 				fee.setCreationTime(creationTimeStamp);
 				fee.setLastUpdatedTime(creationTimeStamp);
 				long billNumber = creationTime ;
