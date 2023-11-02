@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SmsrestservicesApplication<smsrestservices>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.sms.SmsrestservicesApplication",
+            "projectName": "smsrestservices",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

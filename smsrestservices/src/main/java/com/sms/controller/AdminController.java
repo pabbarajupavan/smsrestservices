@@ -9,22 +9,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sms.beans.FeeMasterRequest;
-import com.sms.beans.PaymentRequest;
+import com.sms.beans.StaffDetailRequest;
 import com.sms.beans.StudentMasterRequest;
 import com.sms.beans.StudentResponse;
 import com.sms.model.StudentMaster;
-import com.sms.service.FeeMasterService;
-import com.sms.service.FeeService;
+import com.sms.repository.StaffRepository;
+import com.sms.service.EmployeeService;
 import com.sms.service.FileUploadService;
 import com.sms.service.StudentMasterService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/api")
@@ -34,13 +32,10 @@ public class AdminController {
 	private StudentMasterService studentMasterService ;
 	
 	@Autowired
-	private FeeMasterService feeMasterService ;
-	
-	@Autowired
-	private FeeService feeService ;
-	
-	@Autowired
 	private FileUploadService fileUploadService ;
+
+    @Autowired
+    private EmployeeService employeeService ;
 	
 	String response = null;
 	
@@ -51,8 +46,8 @@ public class AdminController {
 	 * Rest call to add students to the student master table
 	 * From request as json object
 	 * **/
-	@RequestMapping(value = "/addstudentmaster", method = RequestMethod.POST)
-	private String addStudentsToMasterTable(@RequestBody StudentMasterRequest request) {
+	@PostMapping("/addstudentmaster")
+	public String addStudentsToMasterTable(@RequestBody StudentMasterRequest request) {
 		logger.info("Inside addstudentmaster controller");
 		if (request != null && request.getReqHdr().getUserName() != null) {
 			response = studentMasterService.enrollStudent(request) ;
@@ -65,7 +60,7 @@ public class AdminController {
 	}
 	
 	//file upload endpoint
-    @RequestMapping(value="/uploadFile", method=RequestMethod.POST)
+    @PostMapping("/uploadFile")
     public String fileUpload(@RequestParam("file") MultipartFile file,@RequestParam("fileName") String fileName, @RequestParam("userName") String userName) {
 
         
@@ -80,10 +75,10 @@ public class AdminController {
                 return response;
                } 
                if (!fileName.isBlank() && fileName.length() > 0 && fileName.contains("staff")) {
-            	   //response = fileUploadService.
+            	   response = fileUploadService.readStaffDataFromFileAndSaveToDB(filePath, userName) ;
                }
             } catch (Exception e) {
-                // TODO: handle exception
+                
                 e.printStackTrace();
                 response = e.getMessage() ;
                 return response ;
@@ -102,56 +97,19 @@ public class AdminController {
         
     }
     
+    @PostMapping(value="/addstaffdetails")
+    public @ResponseBody String addEmployee(@RequestBody StaffDetailRequest request) {
+        
+        logger.info("entered into addEmployee");
+        if(request != null && request.getReqHdr().getUserName() != null){
+            response = employeeService.saveEmployee(request) ;
+            return response ;
+        }
+        return response;
+    }
     
-    /**
-	 * 
-	 * Rest call to add fee details to the fee master table
-	 * From request as json object
-	 * **/
-	@RequestMapping(value = "/addFeeDetails", method = RequestMethod.POST)
-	private String saveFeeStructure(@RequestBody FeeMasterRequest request) {
-		
-		if (request != null && request.getReqHdr().getUserName() != null) {
-			response = feeMasterService.addFeeDetails(request);
-		} 
-		return response ;
-		
-	}
-	
-	/**
-	 * Rest call to get student info
-	 * for the payment
-	 */
-	@RequestMapping(value = "/getstudentInfoForFee", method = RequestMethod.GET)
-	public StudentResponse getStudentInfoForFee(@RequestBody PaymentRequest req) {
-		StudentResponse resp = new StudentResponse() ;
-		long currentTime = System.currentTimeMillis() ;
-		logger.info("inside rest call to get the fee details of student started at" +currentTime) ;
-		
-		if (req != null && req.getReqHdr().getUserName() != null) {
-			
-			 resp = studentMasterService.fetchStudentInfoForFeePayaments(req.getStudentRequest().getAdmissionNumber()) ;
-			
-		}
-		
-		return resp;
-	}
-
+    
+    
 	
 	
-	
-	/**
-	 * Rest call to add fee payment of student
-	 * to the fee table
-	 * 
-	 */
-	@RequestMapping(value = "/payments", method = RequestMethod.POST)
-	private String savePayments(@RequestBody PaymentRequest request) {
-		
-		if (request != null && request.getReqHdr().getUserName() != null) {
-			response = feeService.addPaymentInfo(request);
-		} 
-		return response ;
-		
-	}
 }

@@ -30,9 +30,9 @@ public class IStudentMasterService implements StudentMasterService {
 	
 	@Override
 	public String enrollStudent(StudentMasterRequest request) {
-		// TODO Auto-generated method stub
+		
 		long startTime = System.currentTimeMillis() ;
-		logger.info("saving students to db starts at" +startTime);
+		logger.info("saving students to db starts at {}",startTime);
 		String response = null;
 		try {
 			long creationTime = System.currentTimeMillis() ;
@@ -50,6 +50,7 @@ public class IStudentMasterService implements StudentMasterService {
 				master.setAddress(request.getAddress());
 				master.setDateOfJoin(request.getDateOfJoin());
 				master.setJoiningOfClass(request.getJoiningOfClass());
+				master.setPresentClass(request.getJoiningOfClass());
 				master.setAdmissionNumber(request.getAdmissionNumber());
 				master.setPreviousSchool(request.getPreviousSchool());
 				master.setSyllabus(request.getSyllabus());
@@ -64,20 +65,17 @@ public class IStudentMasterService implements StudentMasterService {
 				master.setLastUpdatedTime(creationTimeStamp);
 				StudentMaster result = studentMasterRepo.save(master) ;
 				logger.info(result.toString());
-				if (result != null) {
-					response = "Student successfully Enrolled";
-					
-				}
-				long endTime = System.currentTimeMillis() ;
-				logger.info("Student record inserted at" + endTime);
+				response = "Student enrolled successfully" ;
+				
+				
 			} else {
 				response = "Record already existed with admissionNumber: "+request.getAdmissionNumber()+ " Please check once" ;
 			}
 			long endTime = System.currentTimeMillis() ;
-			logger.info("saving students to db ends at" +endTime);
+			logger.info("saving students to db ends at {}",endTime);
 			return response ;
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			e.printStackTrace();
 			response = e.getLocalizedMessage() ;
 			return response;
@@ -110,7 +108,7 @@ public class IStudentMasterService implements StudentMasterService {
 			}
 			return response ;
 		} catch (NullPointerException e) {
-			// TODO: handle exception
+			
 			String msg = e.getMessage();
 			response.setMessage(msg);
 			return response ;

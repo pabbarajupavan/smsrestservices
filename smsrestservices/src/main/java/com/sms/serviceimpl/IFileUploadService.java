@@ -14,9 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import com.sms.model.StaffDetails;
 import com.sms.model.StudentMaster;
+import com.sms.repository.StaffRepository;
 import com.sms.repository.StudentMasterRepository;
 import com.sms.service.FileUploadService;
+
+import jakarta.transaction.Transactional;
 
 @Service("fileUploadService")
 public class IFileUploadService implements FileUploadService {
@@ -26,13 +30,16 @@ public class IFileUploadService implements FileUploadService {
 	@Autowired
 	private StudentMasterRepository studentMasterRepository ;
 
+	private StaffRepository staffRepository ;
+
+	@Transactional
 	@Override
 	public String readDataFromFileAndSaveToDB(String filePath, String userName) throws FileNotFoundException {
-		// TODO Auto-generated method stub
+		
 		String response = null ;
 		long creationTime = System.currentTimeMillis() ;
         Timestamp creTimestamp = new Timestamp(creationTime) ;
-        logger.info("reading file started at" +creationTime);
+        logger.info("reading file started at {}",creTimestamp);
         try (Stream<String> lines = new BufferedReader(new FileReader(filePath)).lines()){
         	List<StudentMaster> studentsList = lines
         			.skip(1) //skips the header line
@@ -72,32 +79,79 @@ public class IFileUploadService implements FileUploadService {
 						return student;
         				
         			}).collect(Collectors.toList());
+				
         	
         	try {
         		
               List<StudentMaster> students = studentMasterRepository.saveAll(studentsList) ;
-              logger.info(students.toString());
-              if (students!= null && students.size() !=0) {
-                 response = "Student list added to the database" ; 
-              }
+              response = "student list added to the database" ;
               long stopTime = System.currentTimeMillis() ;
-              logger.info("Data inserted to db at"+stopTime);
+              logger.info("Data inserted to db at {}",stopTime);
               return response ;  
               } catch (DataIntegrityViolationException e) {
-                  // TODO: handle exception
-                  //e.printStackTrace();
                   response = e.getMostSpecificCause().getMessage();
                   return response;
               }
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 			e.printStackTrace();
 	        response = e.getMessage() ;
 	        return response ;
 		}
 		
         
+	}
+
+	@Override
+	public String readStaffDataFromFileAndSaveToDB(String filePath, String userName) throws FileNotFoundException {
+		String response = null;
+		long startTime = System.currentTimeMillis() ;
+		Timestamp timestamp = new Timestamp(startTime) ;
+		logger.info("the file reading started at {}", timestamp);
+		try (Stream<String> lines = new BufferedReader(new FileReader(filePath)).lines()) {
+			List<StaffDetails> staffList = lines
+				.skip(1)
+				.map(line -> line.split(","))
+				.map(columns -> {
+					StaffDetails staff = new StaffDetails() ;
+					staff.setFirstName(columns[0]);
+					staff.setLastName(columns[1]);
+					staff.setEmail(columns[2]);
+					staff.setContactNumber(columns[3]);
+					staff.setAdharNumber(columns[4]);
+					String dateOfBirth = columns[7];
+            		staff.setDateOfBirth(Timestamp.valueOf(dateOfBirth));
+					String dateOfJoin = columns[8];
+					staff.setDateOfJoin(Timestamp.valueOf(dateOfJoin));
+					staff.setIsCertificatesSubmitted(columns[9]);
+					staff.setExperience(columns[10]);
+					staff.setQualification(columns[11]);
+					staff.setSubject(columns[12]);
+					staff.setAllotedClasses(columns[13]);
+					return staff; 
+				}).collect(Collectors.toList());
+				
+				response = saveStaff(staffList) ;
+				
+
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		throw new UnsupportedOperationException("Unimplemented method 'readStaffDataFromFileAndSaveToDB'");
+	}
+
+	private String saveStaff(List<StaffDetails> staffList) {
+		String response = null;
+		try {
+				staffRepository.saveAll(staffList) ;
+				response = "staff details added to the db" ;
+				return response ;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		return response;
 	}
 
 }
